@@ -24,7 +24,6 @@ export async function GET(req: Request) {
       .select("*")
       .order("report_date", { ascending: false })
       .order("created_at", { ascending: false });
-    if (beach) query = query.ilike("beach_name", `%${beach}%`);
 
     const { data, error } = await query;
     if (error) throw error;
