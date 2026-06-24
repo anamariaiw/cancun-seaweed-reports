@@ -74,7 +74,7 @@ export default function Home() {
   return (
     <main className="page">
       <section className="hero">
-        <h1>Report Cancun Seaweed</h1>
+        <h1>Cancun Sargassum Report</h1>
         <p className="subtitle">
           Help travelers by posting current beach conditions. Submit a quick report, then view community updates and beach-level statistics.
         </p>
@@ -82,7 +82,7 @@ export default function Home() {
 
       <section className="grid">
         <div className="card">
-          <label htmlFor="beach">Beach or area name</label>
+          <label htmlFor="beach">Beach or Resort</label>
           <input id="beach" value={beachName} onChange={(e) => setBeachName(e.target.value)} placeholder="Example: Playa Norte, Hotel Zone, Playa del Carmen" />
 
           <label htmlFor="date">Date observed</label>
