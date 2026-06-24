@@ -1,7 +1,21 @@
 *{box-sizing:border-box}
 :root{--ink:#0b1720;--muted:#596a75;--line:#d8e6ee;--card:rgba(255,255,255,.9);--accent:#007c89;--accent-dark:#005e68;--bg:#f3fbff}
-html,body{margin:0;min-height:100%;color:var(--ink);font-family:Arial,Helvetica,sans-serif;background:linear-gradient(rgba(255,255,255,.52),rgba(255,255,255,.52)),radial-gradient(circle at top left,rgba(0,124,137,.2),transparent 30%),radial-gradient(circle at bottom right,rgba(255,196,87,.24),transparent 35%),var(--bg)}
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    linear-gradient(rgba(255,255,255,0.45), rgba(255,255,255,0.45)),
+    url("/beach-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 button,input,select,textarea{font:inherit}
+
 .page{width:min(1040px,92vw);margin:0 auto;padding:42px 0 70px}
 .hero{text-align:center;margin-bottom:24px}
 h1{font-size:clamp(23px,4.2vw,46px);line-height:.95;letter-spacing:-.06em;margin:0 0 12px}
