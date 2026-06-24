@@ -1,0 +1,136 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+type Report = {
+  id: string;
+  beach_name: string;
+  report_date: string;
+  sargassum_level: string;
+  notes: string | null;
+  photo_url: string | null;
+  created_at: string;
+};
+
+type Stats = { total: number; clear: number; almostClear: number; moderate: number; high: number };
+
+export default function Home() {
+  const [beachName, setBeachName] = useState("");
+  const [reportDate, setReportDate] = useState("");
+  const [level, setLevel] = useState("Clear");
+  const [notes, setNotes] = useState("");
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [status, setStatus] = useState("");
+  const [reports, setReports] = useState<Report[]>([]);
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [loadingReports, setLoadingReports] = useState(false);
+
+  async function submitReport() {
+    if (!beachName.trim() || !reportDate.trim()) {
+      setStatus("Please enter the beach name and date.");
+      return;
+    }
+    setStatus("Submitting report...");
+    const formData = new FormData();
+    formData.append("beachName", beachName);
+    formData.append("reportDate", reportDate);
+    formData.append("level", level);
+    formData.append("notes", notes);
+    if (photo) formData.append("photo", photo);
+
+    const response = await fetch("/api/reports", { method: "POST", body: formData });
+    const data = await response.json();
+    if (!response.ok) {
+      setStatus(data.error || "Something went wrong.");
+      return;
+    }
+    setStatus("Report submitted. Thank you!");
+    setNotes("");
+    setPhoto(null);
+    await loadReports();
+  }
+
+  async function loadReports() {
+    setLoadingReports(true);
+    const query = beachName.trim() ? `/api/reports?beach=${encodeURIComponent(beachName.trim())}` : "/api/reports";
+    const response = await fetch(query);
+    const data = await response.json();
+    if (response.ok) {
+      setReports(data.reports || []);
+      setStats(data.stats || null);
+    } else {
+      setStatus(data.error || "Could not load reports.");
+    }
+    setLoadingReports(false);
+  }
+
+  useEffect(() => {
+    setReportDate(new Date().toISOString().slice(0, 10));
+    loadReports();
+  }, []);
+
+  const levels = ["Clear", "Almost Clear", "Moderate", "High"];
+
+  return (
+    <main className="page">
+      <section className="hero">
+        <h1>Report Cancun Seaweed</h1>
+        <p className="subtitle">
+          Help travelers by posting current beach conditions. Submit a quick report, then view community updates and beach-level statistics.
+        </p>
+      </section>
+
+      <section className="grid">
+        <div className="card">
+          <label htmlFor="beach">Beach or area name</label>
+          <input id="beach" value={beachName} onChange={(e) => setBeachName(e.target.value)} placeholder="Example: Playa Norte, Hotel Zone, Playa del Carmen" />
+
+          <label htmlFor="date">Date observed</label>
+          <input id="date" type="date" value={reportDate} onChange={(e) => setReportDate(e.target.value)} />
+
+          <label>Sargassum level</label>
+          <div className="levels">
+            {levels.map((item) => (
+              <button key={item} type="button" className={level === item ? "level active" : "level"} onClick={() => setLevel(item)}>
+                {item}
+              </button>
+            ))}
+          </div>
+
+          <label htmlFor="photo">Optional photo</label>
+          <input id="photo" type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files?.[0] || null)} />
+
+          <label htmlFor="notes">Notes or question</label>
+          <textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Example: Water looked clear near the pier, but seaweed was piled on the sand." />
+
+          <button className="primary" onClick={submitReport}>Submit Current Conditions</button>
+          <button className="secondary" onClick={loadReports}>View Community Reports</button>
+
+          <div className="notice">{status || "Reports are public. Do not upload private or sensitive images."}</div>
+        </div>
+
+        <div className="card">
+          <h2>Community reports</h2>
+          {stats && (
+            <div className="stats">
+              <div className="stat"><b>{stats.total}</b><span>Total</span></div>
+              <div className="stat"><b>{stats.clear + stats.almostClear}</b><span>Clear-ish</span></div>
+              <div className="stat"><b>{stats.moderate}</b><span>Moderate</span></div>
+              <div className="stat"><b>{stats.high}</b><span>High</span></div>
+            </div>
+          )}
+          {loadingReports && <p className="empty">Loading reports...</p>}
+          {!loadingReports && reports.length === 0 && <p className="empty">No reports yet. Submit the first one, or search by a different beach name.</p>}
+          {reports.map((report) => (
+            <article className="report" key={report.id}>
+              <div className="reportTop"><strong>{report.beach_name}</strong><span className="pill">{report.sargassum_level}</span></div>
+              <div className="empty">{report.report_date}</div>
+              {report.notes && <p>{report.notes}</p>}
+              {report.photo_url && <img className="photo" src={report.photo_url} alt={`Beach condition at ${report.beach_name}`} />}
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
