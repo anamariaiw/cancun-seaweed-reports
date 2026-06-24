@@ -4,7 +4,7 @@ html,body{margin:0;min-height:100%;color:var(--ink);font-family:Arial,Helvetica,
 button,input,select,textarea{font:inherit}
 .page{width:min(1040px,92vw);margin:0 auto;padding:42px 0 70px}
 .hero{text-align:center;margin-bottom:24px}
-h1{font-size:clamp(38px,7vw,76px);line-height:.95;letter-spacing:-.06em;margin:0 0 12px}
+h1{font-size:clamp(23px,4.2vw,46px);line-height:.95;letter-spacing:-.06em;margin:0 0 12px}
 .subtitle{max-width:700px;margin:0 auto;color:var(--muted);font-size:19px;line-height:1.45}
 .grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:18px;align-items:start}
 @media(max-width:860px){.grid{grid-template-columns:1fr}}
