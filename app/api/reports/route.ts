@@ -19,7 +19,11 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const beach = searchParams.get("beach");
 
-    let query = supabase.from("beach_reports").select("*").order("created_at", { ascending: false }).limit(30);
+    let query = supabase
+      .from("beach_reports")
+      .select("*")
+      .order("report_date", { ascending: false })
+      .order("created_at", { ascending: false });
     if (beach) query = query.ilike("beach_name", `%${beach}%`);
 
     const { data, error } = await query;
