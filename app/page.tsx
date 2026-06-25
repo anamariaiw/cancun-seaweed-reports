@@ -55,9 +55,9 @@ export default function Home() {
     await loadReports();
   }
 
-  async function loadReports() {
+  async function loadReports(sort = sortBy) {
     setLoadingReports(true);
-    const query = beachName.trim() ? `/api/reports?beach=${encodeURIComponent(beachName.trim())}` : "/api/reports";
+    const query = `/api/reports?sort=${sort}`;
     const response = await fetch(query);
     const data = await response.json();
     if (response.ok) {
