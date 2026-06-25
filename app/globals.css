@@ -53,12 +53,12 @@ textarea{min-height:88px;resize:vertical}
 }
 
 .ratingButton{
-  width:56px;
-  height:56px;
+  width:48px;
+  height:48px;
   border:none;
   border-radius:50%;
   color:white;
-  font-size:24px;
+  font-size:21px;
   font-weight:900;
   cursor:pointer;
   transition:.15s;
@@ -75,11 +75,10 @@ textarea{min-height:88px;resize:vertical}
 }
 
 .rating-0{background:#0a8f45}
-.rating-1{background:#5fbf3b}
-.rating-2{background:#b9d531;color:#1b1b1b}
-.rating-3{background:#ffc62a;color:#1b1b1b}
-.rating-4{background:#ff8d1a}
-.rating-5{background:#e53935}
+.rating-1{background:#6fc247}
+.rating-2{background:#ffc62a;color:#1b1b1b}
+.rating-3{background:#ff8d1a}
+.rating-4{background:#e53935}
 
 .required{
   color:#d62d20;
@@ -149,4 +148,35 @@ textarea{min-height:88px;resize:vertical}
   color:white;
   font-weight:900;
   box-shadow:0 4px 10px rgba(0,0,0,.12);
+}
+
+@media(max-width:520px){
+  .page{
+    width:94vw;
+    padding:22px 0 50px
+  }
+
+  .card{
+    padding:18px;
+    border-radius:18px
+  }
+
+  .ratingLegend{
+    font-size:13px;
+    gap:8px
+  }
+
+  .ratingButtons{
+    gap:6px
+  }
+
+  .ratingButton{
+    width:42px;
+    height:42px;
+    font-size:19px
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr)
+  }
 }
