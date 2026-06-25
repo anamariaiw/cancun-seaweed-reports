@@ -131,6 +131,21 @@ export default function Home() {
 
         <div className="card">
           <h2>Community reports</h2>
+
+            <select
+              className="sortSelect"
+              value={sortBy}
+              onChange={(e) => {
+                setSortBy(e.target.value);
+                loadReports(e.target.value);
+              }}
+            >
+              <option value="submitted">Newest submissions</option>
+              <option value="observed">Observation date</option>
+              <option value="location">Location (A-Z)</option>
+              <option value="rating">Seaweed rating</option>
+            </select>
+          
           {stats && (
             <div className="stats">
               <div className="stat"><b>{stats.total}</b><span>Total</span></div>
@@ -144,7 +159,11 @@ export default function Home() {
           {reports.map((report) => (
             <article className="report" key={report.id}>
               <div className="reportTop"><strong>{report.beach_name}</strong><span className="pill">{report.sargassum_level}</span></div>
-              <div className="empty">{report.report_date}</div>
+              <div className="empty">
+                Observed: {report.report_date}
+                <br />
+                Submitted: {new Date(report.created_at).toLocaleString()}
+              </div>
               {report.notes && <p>{report.notes}</p>}
               {report.photo_url && <img className="photo" src={report.photo_url} alt={`Beach condition at ${report.beach_name}`} />}
             </article>
