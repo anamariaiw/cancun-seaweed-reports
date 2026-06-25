@@ -169,10 +169,12 @@ export default function Home() {
   <span className="sortLabel">Sort by</span>
 
   {[
-    { value: "submitted", label: "🕒 Submitted" },
-    { value: "observed", label: "📅 Observed" },
-    { value: "location", label: "📍 Location" },
-    { value: "rating", label: "🌿 Rating" },
+    
+    { value: "location", label: "Location" },
+    { value: "rating", label: "Rating" },
+    { value: "observed", label: "Observed" },
+    { value: "submitted", label: "Submitted" },
+  
   ].map((item) => (
     <button
       key={item.value}
