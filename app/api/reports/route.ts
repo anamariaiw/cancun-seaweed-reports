@@ -26,7 +26,7 @@ export async function GET(req: Request) {
   } else if (sort === "observed") {
     query = query.order("report_date", { ascending: false });
   } else if (sort === "rating") {
-    query = query.order("sargassum_level", { ascending: false });
+    query = query.order("sargassum_level", { ascending: true });
   } else {
     query = query.order("created_at", { ascending: false });
   }
