@@ -37,7 +37,11 @@ export default function Home() {
       return;
     }
 
-    setStatus("Submitting report...");
+    setStatus("Report submitted. Thank you!");
+    alert("Submitted! Scroll down to view community reports.");
+    setNotes("");
+    setPhoto(null);
+    await loadReports(sortBy);
 
     const formData = new FormData();
     formData.append("beachName", beachName);
