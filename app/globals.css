@@ -191,3 +191,15 @@ textarea{
     grid-template-columns:repeat(2,1fr)
   }
 }
+
+
+.secondary{
+  border:1px solid #8ec5ff;
+  background:#eaf4ff;
+  color:#1565c0;
+}
+
+.secondary:hover{
+  background:#d7ebff;
+  border-color:#5ea9ff;
+}
