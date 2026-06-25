@@ -38,7 +38,11 @@ textarea{
   padding:13px 14px;
   background:white;
 }
-
+input[type="date"]{
+  appearance:none;
+  -webkit-appearance:none;
+  box-sizing:border-box;
+}
 .ratingLegend{
   display:flex;
   justify-content:space-between;
