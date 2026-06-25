@@ -82,7 +82,7 @@ export default function Home() {
     loadReports("submitted");
   }, []);
 
-  const levels = ["0", "1", "2", "3", "4", "5"];
+  const levels = ["0", "1", "2", "3", "4"];
 
   return (
     <main className="page">
@@ -115,7 +115,7 @@ export default function Home() {
 
           <div className="ratingLegend">
             <span>0 = Great / no seaweed</span>
-            <span>5 = Bad / lots of seaweed</span>
+            <span>4 = Bad / lots of seaweed</span>
           </div>
 
           <div className="ratingButtons">
