@@ -17,13 +17,19 @@ export async function GET(req: Request) {
   try {
     const supabase = getSupabase();
     const { searchParams } = new URL(req.url);
-    const beach = searchParams.get("beach");
+    const sort = searchParams.get("sort") || "submitted";
 
-    let query = supabase
-      .from("beach_reports")
-      .select("*")
-      .order("report_date", { ascending: false })
-      .order("created_at", { ascending: false });
+  let query = supabase.from("beach_reports").select("*");
+  
+  if (sort === "location") {
+    query = query.order("beach_name", { ascending: true });
+  } else if (sort === "observed") {
+    query = query.order("report_date", { ascending: false });
+  } else if (sort === "rating") {
+    query = query.order("sargassum_level", { ascending: false });
+  } else {
+    query = query.order("created_at", { ascending: false });
+  }
 
     const { data, error } = await query;
     if (error) throw error;
