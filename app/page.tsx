@@ -17,7 +17,7 @@ type Stats = { total: number; clear: number; almostClear: number; moderate: numb
 export default function Home() {
   const [beachName, setBeachName] = useState("");
   const [reportDate, setReportDate] = useState("");
-  const [level, setLevel] = useState("Clear");
+  const [level, setLevel] = useState("0");
   const [notes, setNotes] = useState("");
   const [photo, setPhoto] = useState<File | null>(null);
   const [status, setStatus] = useState("");
@@ -26,10 +26,15 @@ export default function Home() {
   const [loadingReports, setLoadingReports] = useState(false);
 
   async function submitReport() {
-    if (!beachName.trim() || !reportDate.trim()) {
-      setStatus("Please enter the beach name and date.");
-      return;
-    }
+  if (!beachName.trim() || !reportDate.trim()) {
+    setStatus("Please enter the beach name and date.");
+    return;
+  }
+  
+  if (!photo) {
+    setStatus("Please upload a beach photo.");
+    return;
+  }
     setStatus("Submitting report...");
     const formData = new FormData();
     formData.append("beachName", beachName);
@@ -69,7 +74,7 @@ export default function Home() {
     loadReports();
   }, []);
 
-  const levels = ["Clear", "Almost Clear", "Moderate", "High"];
+  const levels = ["0", "1", "2", "3", "4", "5"];
 
   return (
     <main className="page">
@@ -88,21 +93,36 @@ export default function Home() {
           <label htmlFor="date">Date observed</label>
           <input id="date" type="date" value={reportDate} onChange={(e) => setReportDate(e.target.value)} />
 
-          <label>Sargassum level</label>
-          <div className="levels">
-            {levels.map((item) => (
-              <button key={item} type="button" className={level === item ? "level active" : "level"} onClick={() => setLevel(item)}>
-                {item}
-              </button>
-            ))}
-          </div>
+    <label>Seaweed rating</label>
+    
+    <div className="ratingLegend">
+      <span>0 = Great / no seaweed</span>
+      <span>5 = Bad / lots of seaweed</span>
+    </div>
+    
+    <div className="ratingButtons">
+      {levels.map((item) => (
+        <button
+          key={item}
+          type="button"
+          className={`ratingButton rating-${item} ${level === item ? "active" : ""}`}
+          onClick={() => setLevel(item)}
+        >
+          {item}
+        </button>
+      ))}
+    </div>
 
-          <label htmlFor="photo">Optional photo</label>
+          <label htmlFor="photo">
+            Upload beach photo <span className="required">Required</span>
+          </label>
+                    
           <input id="photo" type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files?.[0] || null)} />
 
-          <label htmlFor="notes">Notes or question</label>
-          <textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Example: Water looked clear near the pier, but seaweed was piled on the sand." />
-
+          <label htmlFor="notes">Notes or question <span className="optional">(optional)</span></label>
+          <textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} 
+            placeholder="Optional: add details about smell, beach cleanup, water color, etc." />
+        
           <button className="primary" onClick={submitReport}>Submit Current Conditions</button>
           <button className="secondary" onClick={loadReports}>View Community Reports</button>
 
