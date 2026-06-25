@@ -109,3 +109,44 @@ textarea{min-height:88px;resize:vertical}
 .pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#eaf7f7;color:var(--accent-dark);font-size:13px;font-weight:800}
 .photo{margin-top:10px;max-width:100%;border-radius:14px;border:1px solid var(--line)}
 .empty{color:var(--muted);line-height:1.45}
+
+.sortBar{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:8px 0 16px;
+}
+
+.sortLabel{
+  font-weight:900;
+  color:var(--muted);
+  margin-right:4px;
+}
+
+.sortPill{
+  border:1px solid var(--line);
+  background:white;
+  border-radius:999px;
+  padding:8px 12px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.sortPill.active{
+  background:var(--accent);
+  color:white;
+  border-color:var(--accent);
+}
+
+.miniRating{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:900;
+  box-shadow:0 4px 10px rgba(0,0,0,.12);
+}
