@@ -27,6 +27,17 @@ label{display:block;font-weight:800;margin:15px 0 7px}
 label:first-child{margin-top:0}
 input,textarea{width:100%;border:1px solid var(--line);border-radius:14px;padding:13px 14px;background:white;color:var(--ink);outline:none}
 textarea{min-height:88px;resize:vertical}
+input,
+textarea{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  display:block;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px 14px;
+  background:white;
+}
 
 .ratingLegend{
   display:flex;
