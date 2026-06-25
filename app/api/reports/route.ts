@@ -59,6 +59,13 @@ export async function POST(req: Request) {
       return Response.json({ error: "Beach name, date, and sargassum level are required." }, { status: 400 });
     }
 
+    if (!photo) {
+      return Response.json(
+        { error: "A beach photo is required." },
+        { status: 400 }
+      );
+    }
+    
     let photoUrl: string | null = null;
 
     if (photo instanceof File && photo.size > 0) {
