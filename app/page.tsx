@@ -165,26 +165,34 @@ export default function Home() {
         <div className="card">
           <h2>Community reports</h2>
 
-          <select
-            className="sortSelect"
-            value={sortBy}
-            onChange={(e) => {
-              setSortBy(e.target.value);
-              loadReports(e.target.value);
-            }}
-          >
-            <option value="submitted">Newest submissions</option>
-            <option value="observed">Observation date</option>
-            <option value="location">Location (A-Z)</option>
-            <option value="rating">Seaweed rating</option>
-          </select>
+<div className="sortBar">
+  <span className="sortLabel">Sort by</span>
+
+  {[
+    { value: "submitted", label: "🕒 Submitted" },
+    { value: "observed", label: "📅 Observed" },
+    { value: "location", label: "📍 Location" },
+    { value: "rating", label: "🌿 Rating" },
+  ].map((item) => (
+    <button
+      key={item.value}
+      className={`sortPill ${sortBy === item.value ? "active" : ""}`}
+      onClick={() => {
+        setSortBy(item.value);
+        loadReports(item.value);
+      }}
+    >
+      {item.label}
+    </button>
+  ))}
+</div>
 
           {stats && (
             <div className="stats">
-              <div className="stat"><b>{stats.total}</b><span>Total</span></div>
-              <div className="stat"><b>{stats.clear + stats.almostClear}</b><span>Clear-ish</span></div>
-              <div className="stat"><b>{stats.moderate}</b><span>Moderate</span></div>
-              <div className="stat"><b>{stats.high}</b><span>High</span></div>
+<div className="stat"><b>{stats.total}</b><span>Total reports</span></div>
+<div className="stat"><b>{reports.length ? (reports.reduce((sum, r) => sum + Number(r.sargassum_level), 0) / reports.length).toFixed(1) : "0"}</b><span>Avg rating</span></div>
+<div className="stat"><b>{Math.min(...reports.map(r => Number(r.sargassum_level)))}</b><span>Best rating</span></div>
+<div className="stat"><b>{Math.max(...reports.map(r => Number(r.sargassum_level)))}</b><span>Worst rating</span></div>
             </div>
           )}
 
@@ -198,7 +206,9 @@ export default function Home() {
             <article className="report" key={report.id}>
               <div className="reportTop">
                 <strong>{report.beach_name}</strong>
-                <span className="pill">{report.sargassum_level}</span>
+                <span className={`miniRating rating-${report.sargassum_level}`}>
+                  {report.sargassum_level}
+                </span>
               </div>
 
               <div className="empty">
